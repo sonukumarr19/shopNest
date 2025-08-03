@@ -1,0 +1,63 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center px-4">
+  <div class="w-full max-w-lg bg-white rounded-2xl shadow-2xl p-8">
+    <h2 class="text-3xl font-bold text-center text-blue-700 mb-6">
+      Create an Account
+    </h2>
+
+    <form (ngSubmit)="onRegister()" class="space-y-5">
+      <div *ngIf="!isLoading" class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <input type="text" [(ngModel)]="firstName" name="firstName" placeholder="First Name"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+          <input type="text" [(ngModel)]="lastName" name="lastName" placeholder="Last Name"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+        </div>
+
+        <input type="email" [(ngModel)]="registerData.email" name="email" placeholder="Email"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          [class.border-red-500]="!isValidEmail(registerData.email) && registerData.email" required />
+
+        <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="registerData.password" name="password"
+          placeholder="Password"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+
+        <input [type]="showConfirmPassword ? 'text' : 'password'" [(ngModel)]="registerData.confirmPassword"
+          name="confirmPassword" placeholder="Confirm Password"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          [class.border-red-500]="!passwordsMatch()" required />
+
+        <div class="text-xs text-red-500 mt-1" *ngIf="!passwordsMatch()">
+          Passwords do not match
+        </div>
+
+        <div class="flex items-center mt-2 gap-2">
+          <input type="checkbox" [(ngModel)]="registerData.agreeToTerms" name="agree"
+            class="accent-blue-600 w-4 h-4" required />
+          <label class="text-sm text-gray-700">I agree to the Terms and Conditions</label>
+        </div>
+      </div>
+
+      <button type="submit"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-semibold transition duration-200 shadow"
+        [disabled]="isLoading">
+        Register
+      </button>
+    </form>
+
+    <!-- Social Logins -->
+    <div class="mt-6">
+      <p class="text-center text-sm text-gray-500 mb-3">Or sign in with</p>
+      <div class="flex justify-center gap-4">
+        <button (click)="onGoogleLogin()" class="p-2 rounded-full bg-red-500 hover:bg-red-600 shadow-md">
+          <i class="fab fa-google text-white text-lg"></i>
+        </button>
+        <button (click)="onFacebookLogin()" class="p-2 rounded-full bg-blue-700 hover:bg-blue-800 shadow-md">
+          <i class="fab fa-facebook-f text-white text-lg"></i>
+        </button>
+        <button (click)="onTwitterLogin()" class="p-2 rounded-full bg-sky-500 hover:bg-sky-600 shadow-md">
+          <i class="fab fa-twitter text-white text-lg"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

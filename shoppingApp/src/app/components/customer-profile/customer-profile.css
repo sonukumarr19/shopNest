@@ -1,0 +1,109 @@
+/* Flipkart-style custom styles */
+
+/* Toggle switch styles */
+.peer:checked + div {
+  background-color: #2563eb;
+}
+
+.peer:checked + div:after {
+  transform: translateX(100%);
+  border-color: white;
+}
+
+/* Sidebar navigation hover effects */
+nav button {
+  transition: all 0.2s ease-in-out;
+}
+
+nav button:hover {
+  background-color: #f9fafb;
+}
+
+/* Active state for navigation */
+.bg-blue-50 {
+  border-right: 3px solid #2563eb;
+}
+
+/* Card hover effects */
+.border:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Input focus styles */
+input:focus, select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Button styles */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+.bg-blue-600:hover {
+  background-color: #1d4ed8;
+}
+
+.text-blue-600:hover {
+  color: #1d4ed8;
+}
+
+.text-red-600:hover {
+  color: #dc2626;
+}
+
+.text-green-600:hover {
+  color: #16a34a;
+}
+
+/* Order status badges */
+.bg-green-100 {
+  background-color: #dcfce7;
+}
+
+.text-green-800 {
+  color: #166534;
+}
+
+.bg-blue-100 {
+  background-color: #dbeafe;
+}
+
+.text-blue-800 {
+  color: #1e40af;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .lg\:w-80 {
+    width: 100%;
+  }
+  
+  .lg\:flex-row {
+    flex-direction: column;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for sidebar */
+nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+nav::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+nav::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 2px;
+}
+
+nav::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

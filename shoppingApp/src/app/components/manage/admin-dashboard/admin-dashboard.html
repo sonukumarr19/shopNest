@@ -1,0 +1,113 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+  <!-- Header -->
+  <div class="bg-white shadow-lg border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-6">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-10 h-10 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4">
+            <h1 class="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+            <p class="text-sm text-gray-600">Manage your store efficiently</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Welcome Section -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">Welcome to Admin Panel</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Streamline your business operations with our comprehensive management tools. 
+        Choose from the options below to get started.
+      </p>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+      <!-- Manage Categories Card -->
+      <div class="group relative overflow-hidden bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-400 to-emerald-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+        <div class="relative p-8">
+          <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14-7v12a2 2 0 01-2 2H7a2 2 0 01-2-2V4a2 2 0 012-2h10a2 2 0 012 2zM9 11V9a2 2 0 012-2h2a2 2 0 012 2v2M9 11v6a2 2 0 002 2h2a2 2 0 002-2v-6"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-3">Manage Categories</h3>
+          <p class="text-gray-600 mb-6">Organize your products into categories for better navigation and user experience.</p>
+          <button 
+            (click)="navigateToCategories()"
+            class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-emerald-200">
+            Manage Categories
+          </button>
+        </div>
+      </div>
+
+      <!-- Manage Products Card -->
+      <div class="group relative overflow-hidden bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-indigo-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+        <div class="relative p-8">
+          <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-3">Manage Products</h3>
+          <p class="text-gray-600 mb-6">Add, edit, and organize your product inventory with complete control over details.</p>
+          <button 
+            (click)="navigateToProducts()"
+            class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-200">
+            Manage Products
+          </button>
+        </div>
+      </div>
+
+      <!-- Manage Brands Card -->
+      <div class="group relative overflow-hidden bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+        <div class="relative p-8">
+          <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-3">Manage Brands</h3>
+          <p class="text-gray-600 mb-6">Create and maintain brand profiles to showcase manufacturer information.</p>
+          <button 
+            (click)="navigateToBrands()"
+            class="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-200">
+            Manage Brands
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats Section -->
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+      <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Quick Overview</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="text-center p-6 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl">
+          <div class="text-3xl font-bold text-emerald-600 mb-2">{{TotalCategories}}</div>
+          <div class="text-gray-600">Total Categories</div>
+        </div>
+        <div class="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl">
+          <div class="text-3xl font-bold text-blue-600 mb-2">{{TotalProducts}}</div>
+          <div class="text-gray-600">Total Products</div>
+        </div>
+        <div class="text-center p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
+          <div class="text-3xl font-bold text-purple-600 mb-2">{{TotalBrands}}</div>
+          <div class="text-gray-600">Total Brands</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

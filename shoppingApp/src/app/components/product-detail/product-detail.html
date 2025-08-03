@@ -1,0 +1,279 @@
+<div class="max-w-7xl mx-auto p-4 lg:p-8">
+  <div class="flex flex-col lg:flex-row gap-8">
+    <!-- Product Images Section -->
+    <div class="flex flex-col lg:flex-row gap-4 flex-1">
+      <!-- Thumbnail Images -->
+      <div *ngIf="product?.images?.length" class="flex flex-row lg:flex-col gap-2 order-2 lg:order-1">
+        <div *ngFor="let image of product.images; let i = index" 
+            class="w-16 h-16 lg:w-20 lg:h-20 border-2 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-md"
+            [ngClass]="selectedImageIndex === i ? 'border-blue-500' : 'border-gray-200'"
+            (click)="selectImage(i)">
+            <img [src]="image" [alt]="'Product image ' + (i + 1)" class="w-full h-full object-cover">
+        </div>
+        </div>
+
+
+      <!-- Main Image with Zoom -->
+      <div class="relative flex-1 order-1 lg:order-2">
+        <div class="relative w-full h-96 lg:h-96 xl:h-[500px] border border-gray-200 rounded-lg overflow-hidden cursor-crosshair">
+          <img [src]="product.images[selectedImageIndex]"  
+               [alt]="product.name"
+               class="w-full h-full object-contain transition-transform duration-300"
+               (mousemove)="onImageHover($event)"
+               (mouseleave)="onImageLeave()">
+          
+          <!-- Zoom Overlay -->
+          <div *ngIf="showZoom"
+               class="absolute w-1/5 h-1/5 border-2 border-blue-500 bg-blue-100 bg-opacity-20 pointer-events-none z-10"
+               [style.left.%]="zoomPosition.x - 10"
+               [style.top.%]="zoomPosition.y - 10">
+          </div>
+        </div>
+
+        <!-- Zoomed Image (Desktop only) -->
+        <div *ngIf="showZoom" 
+             class="hidden lg:block absolute top-0 left-full ml-4 w-full h-96 xl:h-[500px] border border-gray-200 rounded-lg overflow-hidden bg-white z-20 shadow-xl">
+          <img [src]="product.images[selectedImageIndex]"
+               [alt]="product.name"
+               class="w-[200%] h-[200%] object-cover"
+               [style.object-position]="zoomPosition.x + '% ' + zoomPosition.y + '%'">
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Info Section -->
+    <div class="flex-1 lg:pl-8">
+      <!-- Product Title and Rating -->
+      <div class="mb-6">
+        <h1 class="text-xl lg:text-2xl font-medium text-gray-900 mb-3 leading-tight">{{ product.name }}</h1>
+        <div class="flex items-center gap-4 mb-4">
+          <div class="flex items-center gap-2">
+            <div class="flex items-center">
+              <span *ngFor="let star of getStarArray(product.rating!)" 
+                    class="text-2xl cursor-pointer"
+                    [ngClass]="star ? 'text-orange-400' : 'text-gray-300'">★</span>
+              <span class="ml-2 font-semibold text-gray-900">{{ product.rating }}</span>
+            </div>
+            <span class="text-gray-500 text-sm">({{ product.reviewCount | number }} reviews)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price Section -->
+      <div class="flex items-center gap-4 mb-6 flex-wrap">
+        <div class="text-3xl font-semibold text-gray-900">₹{{ product.price | number }}</div>
+        <div class="text-lg text-gray-500 line-through">₹{{ product.price | number }}</div>
+        <div class="bg-green-600 text-white px-2 py-1 rounded text-sm font-semibold">{{ product.discount }}% off</div>
+        <div class="text-green-600 font-semibold text-sm">You save ₹{{discountAmount}}</div>
+      </div>
+
+      <!-- Offers Section -->
+      <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+        <h3 class="text-lg font-medium text-gray-900 mb-3">Available Offers</h3>
+        <div class="space-y-2">
+          <div *ngFor="let offer of Offers" class="flex items-start gap-2 text-sm text-gray-700">
+            <span class="text-base">🎁</span>
+            <span>{{ offer }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Highlights -->
+      <div class="mb-6">
+        <h3 class="text-lg font-medium text-gray-900 mb-3">Key Features</h3>
+        <ul class="space-y-2">
+          <li *ngFor="let highlight of product?.highlights" class="flex items-start gap-2 text-sm text-gray-700">
+            <span class="text-green-600 font-bold mt-0.5">✓</span>
+            <span>{{ highlight }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Quantity and Delivery -->
+      <div class="space-y-4 mb-6">
+        <div class="flex items-center gap-4">
+          <label class="font-semibold text-gray-900">Quantity:</label>
+          <div class="flex items-center border border-gray-300 rounded">
+            <button (click)="changeQuantity(-1)" 
+                    [disabled]="selectedQuantity <= 1"
+                    class="px-3 py-2 text-blue-600 hover:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors">
+              -
+            </button>
+            <span class="px-4 py-2 border-l border-r border-gray-300 font-semibold min-w-[50px] text-center">{{ selectedQuantity }}</span>
+            <button (click)="changeQuantity(1)" 
+                    [disabled]="selectedQuantity >= 10"
+                    class="px-3 py-2 text-blue-600 hover:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors">
+              +
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 text-green-600 font-semibold">
+          <span class="text-lg">🚚</span>
+          <span>{{deliveryInfo }}</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 mb-4">
+        <button (click)="addToCart()" 
+                [disabled]="!product.inStock"
+                class="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors">
+          <span>🛒</span>
+          ADD TO CART
+        </button>
+        <button (click)="buyNow()" 
+                [disabled]="!product.inStock"
+                class="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-orange-600 text-white font-semibold rounded hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors">
+          <span>⚡</span>
+          BUY NOW
+        </button>
+      </div>
+
+      <!-- Stock Status -->
+      <div class="text-center py-2 px-4 rounded font-semibold"
+           [class]="product.inStock ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'">
+        {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Similar products section -->
+
+  <div class="max-w-7xl mx-auto mt-16 px-4">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <div class="inline-block">
+        <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-500 to-red-600 bg-clip-text text-transparent mb-4">
+          Similar Products
+        </h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mx-auto mb-6"></div>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+            Explore products that complement your choice. Find the perfect match for your needs with our curated selection of similar items.
+        </p>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div *ngFor="let product of similarProducts" class="bg-white rounded-2xl shadow-md p-4 flex flex-col">
+        <div class="relative w-full h-[500px] rounded-t-xl overflow-hidden">
+          <img [src]="product.images[0]" alt="{{ product.name }}" class="w-full h-full object-contain" 
+          [routerLink]="'product/' + product._id"/>
+
+          <!-- Wishlist icon button -->
+          <button 
+              class="absolute top-3 right-3 w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center shadow-xl transition"
+              (click)="toggleWishlist(product)"
+          >
+              <i class="material-icons text-red-500 text-[20px] ">
+              {{ product.inWishlist ? 'favorite' : 'favorite_border' }}
+              </i>
+          </button>
+
+          <div class="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg animate-pulse">
+                NEW
+          </div>
+        </div>
+
+        <h3 class="text-lg font-semibold truncate max-w-full" title="{{ product.name }}">
+          {{ product.name }}
+        </h3>
+
+        <!-- Price Section -->
+        <div class="mb-6">
+            <div class="flex items-center gap-3 mb-2">
+            <span class="text-md text-gray-400 line-through">₹{{ product.price }}</span>
+            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-lg text-sm font-semibold">
+                {{ product.discount }}% OFF
+            </span>
+            </div>
+            <div class="flex items-baseline gap-2">
+            <span class="text-sm font-medium text-gray-600">Special Price:</span>
+            <span class="text-xl text-green-600 font-bold">
+                ₹{{ (product.price - product.discount * product.price / 100) | number : '1.0-0' }}
+            </span>
+            </div>
+        </div>
+
+        <div class="mt-auto flex justify-between items-center gap-4">
+          <!-- Add to Cart Button -->
+          <button class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg font-medium text-sm shadow-md transition duration-200">
+              <i class="material-icons text-base">add_shopping_cart</i>
+              Add to Cart
+          </button>
+
+          <!-- Buy Button -->
+          <button class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-7 py-2 rounded-lg font-medium text-sm shadow-md transition duration-200">
+              <i class="material-icons text-base">shopping_cart</i>
+              Buy
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Product Details Tabs -->
+<div class="max-w-7xl mx-auto mt-8 p-4 lg:p-8">
+  <div class="border-b border-gray-200 mb-8">
+    <nav class="flex space-x-8">
+      <button *ngFor="let tab of ['description', 'specifications', 'reviews']; let i = index"
+              class="py-4 px-1 border-b-2 font-medium text-sm transition-colors"
+              [class]="activeTab === tab ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+              (click)="setActiveTab(tab)">
+        <span *ngIf="tab === 'description'">Description</span>
+        <span *ngIf="tab === 'specifications'">Specifications</span>
+        <span *ngIf="tab === 'reviews'">Reviews ({{ product.reviewCount | number }})</span>
+      </button>
+    </nav>
+  </div>
+
+  <div class="min-h-[300px]">
+    <!-- Description Tab -->
+    <div *ngIf="activeTab === 'description'" class="prose max-w-none">
+      <h3 class="text-xl font-semibold text-gray-900 mb-4">Product Description</h3>
+      <p class="text-gray-700 leading-relaxed mb-6">{{ product.description }}</p>
+      
+      <h4 class="text-lg font-semibold text-gray-900 mb-3">Key Highlights</h4>
+      <ul class="space-y-2">
+        <li *ngFor="let highlight of product?.highlights" class="text-gray-700">{{ highlight }}</li>
+      </ul>
+    </div>
+
+    <!-- Specifications Tab -->
+    <div *ngIf="activeTab === 'specifications'" class="space-y-8">
+      <div *ngFor="let specGroup of product?.specifications" class="bg-white">
+        <h4 class="text-lg font-semibold text-gray-900 mb-4">{{ specGroup.category }}</h4>
+        <div class="border border-gray-200 rounded-lg overflow-hidden">
+          <div *ngFor="let spec of specGroup.specs | keyvalue; let last = last" 
+               class="flex border-gray-200"
+               [class.border-b]="!last">
+            <div class="flex-1 px-4 py-3 bg-gray-50 font-semibold text-gray-900 border-r border-gray-200">
+              {{ spec.key }}
+            </div>
+            <div class="flex-[2] px-4 py-3 text-gray-700">
+              {{ spec.value }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reviews Tab -->
+    <div *ngIf="activeTab === 'reviews'">
+      <!-- Reviews Summary -->
+      <div class="bg-gray-50 p-6 rounded-lg mb-8">
+        <div class="flex items-center gap-6">
+          <div class="text-5xl font-semibold text-gray-900">{{ product.rating }}</div>
+          <div>
+            <div class="flex items-center mb-2">
+              <span *ngFor="let star of getStarArray(product.rating!)" 
+                    class="text-2xl cursor-pointer"
+                    [ngClass]="star ? 'text-orange-400' : 'text-gray-300'">★</span>
+            </div>
+            <div class="text-gray-600 text-lg">{{ product.reviewCount | number }} reviews</div>
+          </div>
+        </div>
+      </div>    
+    </div>
+  </div>
+</div>

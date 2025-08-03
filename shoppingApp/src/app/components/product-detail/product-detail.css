@@ -1,0 +1,36 @@
+/* Custom styles for image zoom functionality that can't be handled by Tailwind alone */
+.zoom-overlay {
+  transition: all 0.1s ease;
+}
+
+.zoomed-image img {
+  transition: object-position 0.1s ease;
+}
+
+/* Smooth transitions for interactive elements */
+.thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.main-image:hover {
+  cursor: crosshair;
+}
+
+/* Custom scrollbar for mobile thumbnails */
+.thumbnail-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.thumbnail-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.thumbnail-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+.thumbnail-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

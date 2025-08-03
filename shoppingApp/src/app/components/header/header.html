@@ -1,0 +1,88 @@
+<!-- Add this in your index.html once -->
+<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+<header class="w-full bg-blue-600 text-white shadow-md flex-col">
+  <div class="px-6 p-4 flex items-center justify-between">
+            <!-- Logo -->
+        <div class="text-2xl font-bold tracking-wide cursor-pointer"
+            [routerLink]="['/']">
+            <span class="text-yellow-400">Shop</span>Nest
+        </div>
+
+        <!-- Search Section with different background -->
+        <div class="w-8/12 mx-6">
+            <div class="flex bg-white rounded-md overflow-hidden">
+            <input
+                type="text"
+                [(ngModel)]="searchQuery"
+                placeholder="Search for products, brands and more"
+                class="flex-grow px-4 py-2 text-black outline-none"
+                #searchInput
+            />
+            <button
+                class="bg-yellow-400 px-4 flex items-center justify-center hover:bg-yellow-300 cursor-pointer"
+                (click)="onSearch(searchInput.value)"
+            >
+                <span class="material-icons text-black">search</span>
+            </button>
+            </div>
+        </div>
+
+        <!-- Icons Section -->
+        <div class="flex items-center gap-6">
+            <!-- Profile Icon -->
+            <button (click)="openProfile()" class="hover:text-yellow-300 cursor-pointer"
+              [routerLink]="['/profile']">
+              <span class="material-icons">account_circle</span>
+            </button>
+
+            <!-- Cart Icon -->
+            <button (click)="goToCart()" class="hover:text-yellow-300 cursor-pointer">
+            <span class="material-icons">shopping_cart</span>
+            </button>
+
+           <!-- Login Section -->
+          <div class="flex items-center gap-4">
+            <!-- Display Username -->
+            @if (authService.isAdmin) {
+              <span routerLink="/admin" class="flex items-center gap-2 text-white cursor-pointer font-medium">
+                <span class="material-icons text-yellow-400">shield</span>
+                {{ authService.userName }}
+              </span>
+            }@else {
+              <span class="text-white font-medium">{{ authService.userName }}</span>
+            }
+            <!-- Logout Button -->
+            @if (authService.isLoggedIn) {
+              <button class="flex items-center gap-1 border px-4 py-2 rounded-md text-shadow-white hover:bg-white hover:text-blue-600 transition-colors duration-200"
+              (click)="authService.logout()">
+                <span>Logout</span>
+                <span class="material-icons">logout</span>
+              </button>
+            }@else {
+              <button class="flex items-center gap-1 border px-4 py-2 rounded-md text-shadow-white hover:bg-white hover:text-blue-600 transition-colors duration-200"
+              [routerLink]="['/login']">
+                <span class="material-icons">login</span>
+                <span>Login</span>
+              </button>
+            }
+          </div>
+
+        </div>
+  </div>
+  <!-- Horizontal Scrollable Category List -->
+  @if(authService.isLoggedIn) {
+    <div class="overflow-x-auto whitespace-nowrap py-2 flex justify-around ">
+      <button
+        *ngFor="let cat of categories"
+        class=" text-sm font-medium cursor-pointer border border-hidden hover:text-black transition-all"
+        [class.text-gray-900]="selectedCategory === cat"
+        (click)="onCategoryChange(cat._id!)"
+      >
+        {{ cat.name }}
+      </button>
+    </div>
+  }
+
+  
+</header>

@@ -1,0 +1,58 @@
+/* Additional custom styles for enhanced animations and effects */
+
+.group:hover .group-hover\:scale-110 {
+  transform: scale(1.1);
+}
+
+.group:hover .group-hover\:opacity-10 {
+  opacity: 0.1;
+}
+
+/* Custom button hover effects */
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+/* Card shadow animations */
+.group {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group:hover {
+  transform: translateY(-8px);
+}
+
+/* Gradient text effect for numbers */
+.text-emerald-600,
+.text-blue-600,
+.text-purple-600 {
+  background: linear-gradient(135deg, currentColor, rgba(currentColor, 0.8));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Pulse animation for icons */
+@keyframes pulse-gentle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.group:hover svg {
+  animation: pulse-gentle 2s infinite;
+}

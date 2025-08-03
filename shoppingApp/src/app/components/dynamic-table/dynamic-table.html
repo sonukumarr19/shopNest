@@ -1,0 +1,55 @@
+<div class="p-6 bg-white rounded-2xl shadow-xl">
+  <h2 class="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">{{ title }}</h2>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200 text-sm text-left">
+      <thead class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
+        <tr>
+          <th *ngFor="let heading of tableHeadings" class="px-6 py-3 font-semibold tracking-wide whitespace-nowrap">
+            {{ heading | titlecase }}
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <tr *ngFor="let row of paginatedData" class="hover:bg-gray-50 transition duration-150 ease-in-out">
+          <td *ngFor="let heading of tableHeadings" class="px-6 py-4 text-gray-700 whitespace-nowrap">
+            {{ row[heading] }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Controls -->
+    <div class="flex flex-col sm:flex-row justify-center gap-1 items-center mt-6 text-sm space-y-2 sm:space-y-0 sm:space-x-4">
+    <p class="text-gray-700 text-sm sm:text-base">
+    Page
+        <span class="inline-block mx-2 px-3 py-1 bg-blue-100 text-blue-800 font-medium rounded-full shadow-sm hover:bg-blue-200">
+            {{ currentPage }}
+        </span>
+        of
+        <span class="font-semibold text-gray-800">{{ totalPages }}</span>
+    </p>
+
+    <div class="flex items-center space-x-3">
+        <!-- Prev Button -->
+        <button
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+        class="inline-block mx-2 px-3 py-1 cursor-pointer rounded-full border border-gray-400 bg-white hover:bg-gray-200 disabled:opacity-60 transition"
+        aria-label="Previous page">
+        <span class="material-icons text-gray-700">chevron_left</span>
+        </button>
+
+        <!-- Next Button -->
+        <button
+        (click)="nextPage()"
+        [disabled]="currentPage * pageSize >= tableData.length"
+        class="inline-block mx-2 px-3 py-1 cursor-pointer rounded-full border border-gray-400 bg-white hover:bg-gray-100 disabled:opacity-60 transition"
+        aria-label="Next page">
+        <span class="material-icons text-gray-700">chevron_right</span>
+        </button>
+    </div>
+    </div>
+
+</div>

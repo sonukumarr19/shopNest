@@ -1,0 +1,103 @@
+<div class="max-w-3xl mx-auto mt-12 p-8 bg-white shadow-2xl rounded-2xl">
+  <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+    {{ isEdit ? 'Update Product' : 'Add New Product' }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="isEdit ? updateProduct() : submitForm()" class="space-y-6">
+
+    <!-- Category Dropdown -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-700">Category</label>
+      <select formControlName="categoryId" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-200">
+        <option value="" disabled selected>Select category</option>
+        <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+      </select>
+    </div>
+
+    <!-- Brand Dropdown -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-700">Brand</label>
+      <select formControlName="brandId" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-200">
+        <option value="" disabled selected>Select brand</option>
+        <option *ngFor="let brand of brands" [value]="brand._id">{{ brand.name }}</option>
+      </select>
+    </div>
+
+    <!-- Product Name -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-700">Product Name</label>
+      <input formControlName="name" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-200" placeholder="Enter product name" />
+    </div>
+
+    <!-- Short Description -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-700">Short Description</label>
+      <textarea formControlName="shortDescription" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-200" rows="2" placeholder="Enter short description"></textarea>
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-700">Description</label>
+      <textarea formControlName="description" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-200" rows="4" placeholder="Enter full description"></textarea>
+    </div>
+
+    <!-- Price and Discount Row -->
+    <div class="grid grid-cols-2 gap-6">
+      <div>
+        <label class="block mb-2 text-sm font-medium text-gray-700">Price</label>
+        <input formControlName="price" type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-200" />
+      </div>
+
+      <div>
+        <label class="block mb-2 text-sm font-medium text-gray-700">Discount (%)</label>
+        <input formControlName="discount" type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-200" />
+      </div>
+    </div>
+
+    <div class="flex items-center gap-10">
+      <span>Special Features:</span>
+        <!-- isFeatured Checkbox -->
+      <div class="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          formControlName="isFeatured"
+          id="isFeatured"
+          class="w-4 h-4 text-blue-600"
+        />
+        <label for="isFeatured" class="text-gray-700">Featured Product</label>
+      </div>
+
+      <!-- isNewProduct Checkbox -->
+      <div class="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          formControlName="isNewProduct"
+          id="isNewProduct"
+          class="w-4 h-4 text-blue-600"
+        />
+        <label for="isNewProduct" class="text-gray-700">New Product</label>
+      </div>
+    </div>
+
+    <!-- Image URLs -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-700">Image URLs</label>
+      <div formArrayName="images" class="space-y-2">
+        <div *ngFor="let img of images.controls; let i = index" class="flex items-center gap-2">
+          <input [formControlName]="i" type="text" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm" placeholder="Image URL" />
+          <button type="button" (click)="removeImageField(i)" class="text-red-600 hover:text-red-800 font-bold text-lg">✕</button>
+        </div>
+      </div>
+      <button type="button" (click)="addImageField()" class="mt-2 text-blue-600 hover:underline text-sm font-medium">+ Add Image</button>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      [disabled]="form.invalid"
+      class="w-full bg-blue-600 text-white py-3 shadow-indigo-800 rounded-lg hover:bg-blue-700 font-semibold tracking-wide transition duration-200"
+    >
+      {{ isEdit ? 'Update Product' : 'Add Product' }}
+    </button>
+  </form>
+</div>

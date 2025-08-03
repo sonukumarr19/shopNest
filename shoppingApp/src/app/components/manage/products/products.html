@@ -1,0 +1,94 @@
+<div class="p-6">
+  <div class="flex justify-between">
+    <h1 class="text-3xl font-bold mb-6">Manage Products</h1>
+    <button 
+        class="px-4 py-2 text-sm font-medium cursor-pointer text-green-700 bg-green-100 rounded-full shadow-sm hover:bg-green-600 hover:text-white transition duration-200"
+        routerLink="/admin/products/add"
+        >
+        + Add New Product
+    </button>
+
+  </div>
+
+  <div class="bg-gray-100 p-4 rounded shadow-md overflow-x-auto">
+    <table class="min-w-full bg-white rounded">
+      <thead class="bg-gray-200 text-gray-700 text-sm">
+        <tr>
+          <th class="p-3 text-left">ID</th>
+          <th class="p-3 text-left">Name</th>
+          <th class="p-3 text-left">Short Description</th>
+          <th class="p-3 text-left">Description</th>
+          <th class="p-3 text-left">Price</th>
+          <th class="p-3 text-left">Discount</th>
+          <th class="p-3 text-left">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let product of pagedProducts"
+          class="border-t hover:bg-gray-50 transition"
+        >
+          <td class="p-3 text-sm text-gray-700">{{ product._id }}</td>
+          <td class="p-3 text-sm text-gray-700">{{ product.name }}</td>
+          <td class="p-3 text-sm text-gray-700">{{ product.shortDescription }}</td>
+          <td class="p-3 text-sm text-gray-700">{{ product.description }}</td>
+          <td class="p-3 text-sm text-gray-700"> ₹{{ product.price}}</td>
+          <td class="p-3 text-sm text-gray-700">{{ product.discount }}%</td>
+          <td class="p-3 space-x-2">
+            <div class="flex flex-col items-center gap-2">
+                <button class="px-4 py-1 text-sm text-blue-600 cursor-pointer bg-blue-100 rounded-full hover:bg-blue-200"
+                [routerLink]="'/admin/products/' + product._id">
+                Edit
+                </button>
+                <button class="px-4 py-1 text-sm text-red-600 cursor-pointer bg-red-100 rounded-full hover:bg-red-200"
+                    (click)="deleteProduct(product._id)"
+                >
+                Delete
+                </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div
+      class="flex flex-col sm:flex-row sm:items-center justify-between mt-4 text-sm text-gray-600 gap-3"
+    >
+      <div>
+        Page <span class="font-bold text-blue-600">{{ currentPage }}</span> of
+        {{ totalPages }}
+      </div>
+
+      <div class="flex items-center gap-2">
+        <label>Items per page:</label>
+        <select
+          [(ngModel)]="itemsPerPage"
+          (change)="onItemsPerPageChange()"
+          class="border rounded px-2 py-1"
+        >
+          <option *ngFor="let count of [5, 10, 15]" [value]="count">
+            {{ count }}
+          </option>
+        </select>
+      </div>
+
+      <div class="flex items-center gap-1">
+        <button
+          (click)="prevPage()"
+          [disabled]="currentPage === 1"
+          class="p-1 rounded hover:bg-gray-200 disabled:opacity-50"
+        >
+          <span class="material-icons">chevron_left</span>
+        </button>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+          class="p-1 rounded hover:bg-gray-200 disabled:opacity-50"
+        >
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
