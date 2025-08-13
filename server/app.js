@@ -14,7 +14,12 @@ require('dotenv').config({ quiet: true });
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+// app.use(cors({
+//   origin: 'https://shopnest-frontend.onrender.com',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// }));
+app.use(cors({ origin: "*" }));
 
 app.use("/category", verifyToken ,isAdmin , categoryRoutes);
 app.use("/brand", verifyToken ,isAdmin , brandRoutes);
