@@ -16,15 +16,15 @@ export class WishlistService {
   }
   
   getWishList(){
-    return this.http.get<Product[]>(`http://localhost:3000/customer/wishlists`)
+    return this.http.get<Product[]>(`https://shopnest-wgn8.onrender.com/customer/wishlists`)
   }
 
   addInWishList(id:string){
-    return this.http.post(`http://localhost:3000/customer/wishlists/${id}`,{})
+    return this.http.post(`https://shopnest-wgn8.onrender.com/customer/wishlists/${id}`,{})
   }
 
   removeFromWishList(id:string){
-    return this.http.delete(`http://localhost:3000/customer/wishlists/${id}`,{})
+    return this.http.delete(`https://shopnest-wgn8.onrender.com/customer/wishlists/${id}`,{})
   }
 
 }

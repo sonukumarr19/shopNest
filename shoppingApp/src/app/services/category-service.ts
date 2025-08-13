@@ -11,27 +11,27 @@ export class CategoryService {
   private http = inject(HttpClient);
 
   getCategories(): Observable<Category[]> {
-  return this.http.get<Category[]>('http://localhost:3000/category');
+  return this.http.get<Category[]>('https://shopnest-wgn8.onrender.com/category');
   }
 
   getCategoryById(id: string): Observable<Category> {
-  return this.http.get<Category>(`http://localhost:3000/category/${id}`);
+  return this.http.get<Category>(`https://shopnest-wgn8.onrender.com/category/${id}`);
   }
 
   addCategory(name:String){
-    return this.http.post('http://localhost:3000/category',{
+    return this.http.post('https://shopnest-wgn8.onrender.com/category',{
       name : name
     })
   }
 
   updateCategory(id: string, name: string) {
-    return this.http.put(`http://localhost:3000/category/${id}`, {
+    return this.http.put(`https://shopnest-wgn8.onrender.com/category/${id}`, {
       name: name
     });
   }
 
   deleteCategory(id: string){
-    return this.http.delete(`http://localhost:3000/category/${id}`);
+    return this.http.delete(`https://shopnest-wgn8.onrender.com/category/${id}`);
   }
 
 }

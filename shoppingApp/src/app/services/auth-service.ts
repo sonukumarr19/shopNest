@@ -8,7 +8,7 @@ export class AuthService {
   http = inject(HttpClient);
 
   register(name:string , email:string , password:string){
-    return this.http.post('http://localhost:3000' + '/auth/register',{
+    return this.http.post('https://shopnest-wgn8.onrender.com' + '/auth/register',{
       name,
       email,
       password
@@ -16,7 +16,7 @@ export class AuthService {
   }
 
   loginUser(email: string, password: string) {
-    return this.http.post('http://localhost:3000' + '/auth/login', {
+    return this.http.post('https://shopnest-wgn8.onrender.com' + '/auth/login', {
       email,
       password
     });

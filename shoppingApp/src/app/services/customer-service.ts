@@ -11,15 +11,15 @@ export class CustomerService {
   http = inject(HttpClient);  
 
   getNewProducts(){
-    return this.http.get<Product[]>('http://localhost:3000/customer/new-products');
+    return this.http.get<Product[]>('https://shopnest-wgn8.onrender.com/customer/new-products');
   }
 
   getFeaturedProducts(){
-    return this.http.get<Product[]>('http://localhost:3000/customer/featured-products');
+    return this.http.get<Product[]>('https://shopnest-wgn8.onrender.com/customer/featured-products');
   }
 
   getCategories() {
-    return this.http.get<Category[]>('http://localhost:3000/customer/categories');
+    return this.http.get<Category[]>('https://shopnest-wgn8.onrender.com/customer/categories');
   }
 
   getProducts(searchQuery: {
@@ -31,13 +31,13 @@ export class CustomerService {
     page?: number;
     pageSize?: number;
   }): Observable<{ products: Product[] }> {
-    return this.http.get<{ products: Product[] }>('http://localhost:3000/customer/products', {
+    return this.http.get<{ products: Product[] }>('https://shopnest-wgn8.onrender.com/customer/products', {
       params: searchQuery
     });
   }
 
   getProductById(id:string){
-    return this.http.get<Product>(`http://localhost:3000/customer/product/${id}`)
+    return this.http.get<Product>(`https://shopnest-wgn8.onrender.com/customer/product/${id}`)
   }
 
 }
