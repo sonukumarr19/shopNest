@@ -23,10 +23,6 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    inWishlist: {
-        type: Boolean,
-        default: false
-    },
 });
 
 const Product = mongoose.model('products', productSchema);

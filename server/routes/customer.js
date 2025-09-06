@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const {getNewProducts, getFeaturedProducts ,getProductForListing, getProductById} = require("../handlers/product-handler");
 const {getCategories} = require("../handlers/category-handler");
-const {getWishList, addToWishList} = require("../handlers/wishlist-handler");
+const {getWishList, addToWishList , removeFromWishList} = require("../handlers/wishlist-handler");
+const User = require("../db/user");
 
 router.get("/new-products", getNewProducts);
 
@@ -55,6 +56,21 @@ router.delete("/wishlists/:id" , async(req ,res) =>{
     }catch(error){
         res.status(500).json({ message: 'Error in adding to wishList', error });
     }
-})
+});
+
+// Get user profile by ID
+router.get("/user/:id", async (req, res) => {
+    console.log("Fetching user with ID:", req.params.id);   
+  try {
+    const user = await User.findById(req.params.id).select("-password"); // exclude password
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 module.exports = router;
