@@ -8,7 +8,7 @@ const addToWishList = async (userId, productId) => {
 
 const removeFromWishList = async (userId, productId) => {
     const result = await WishList.deleteOne({ usersId: userId, productId: productId });
-    return { success: result.deletedCount > 0, productId};
+    return { success: result.deletedCount > 0, productId , message: result.deletedCount > 0 ? "Item removed from wishlist" : "Item not found in wishlist"};
 };
 
 
