@@ -1,4 +1,5 @@
 import { CustomerService } from './../../services/customer-service';
+import { WishlistService } from '../../services/wishlist-service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { inject } from '@angular/core';
@@ -31,6 +32,7 @@ export class ProductDetail implements OnInit {
 
   customerService = inject(CustomerService);
   route = inject(ActivatedRoute);
+  wishListService = inject(WishlistService);
 
 
   ngOnInit() {
@@ -132,11 +134,7 @@ export class ProductDetail implements OnInit {
   }
 
   getRandomRating(): number {
-    return Math.floor(Math.random() * 5) + 1; // 1 to 5
-  }
-
-  toggleWishlist(product: Product) {
-    product.inWishlist = !product.inWishlist;
+    return Math.floor(Math.random() * 3) + 3; // 3, 4, or 5
   }
 
   generateReviewsByCategory(category: string): string[] {
@@ -189,6 +187,36 @@ export class ProductDetail implements OnInit {
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
+  }
+
+  isInWishList(product:Product){
+    let productExist = this.wishListService.wishLists.find(x=>x._id == product._id);
+    if(productExist){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  addToWishList(product:Product){
+    console.log("Button hit")
+    console.log(product);
+    if(this.isInWishList(product)){
+      this.wishListService
+      .removeFromWishList(product._id!)
+      .subscribe((result)=>{
+        console.log("result" , result);
+        this.wishListService.init();
+      })
+    }else{
+      this.wishListService
+      .addInWishList(product._id!)
+      .subscribe((result)=>{
+        console.log("res", result);
+        this.wishListService.init();
+      })
+    }
   }
 
   addToCart() {

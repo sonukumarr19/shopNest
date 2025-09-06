@@ -1,3 +1,4 @@
+import { Wishlist } from './../wishlist/wishlist';
 import { WishlistService } from './../../services/wishlist-service';
 import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -8,13 +9,13 @@ import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [NgFor, CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements OnInit, OnDestroy {
   customerService = inject(CustomerService);
-  wishListService = inject(WishlistService)
+  wishListService = inject(WishlistService);
   router = inject(Router);      
   newProducts: Product[] = [];
   featuredProducts: Product[] = [];
@@ -137,9 +138,6 @@ export class Home implements OnInit, OnDestroy {
     this.startAutoSlide();
   }
 
-  toggleWishlist(product: Product) {
-    product.inWishlist = !product.inWishlist;
-  }
 
   isInWishList(product:Product){
     let productExist = this.wishListService.wishLists.find(x=>x._id == product._id);

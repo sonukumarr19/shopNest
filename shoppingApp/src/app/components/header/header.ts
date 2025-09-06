@@ -1,6 +1,6 @@
 import { CategoryService } from './../../services/category-service';
 import { Component, OnInit , inject} from '@angular/core';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Category } from '../../types/category';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
-  imports: [NgFor, RouterLink ,FormsModule],
+  imports: [NgFor, RouterLink ,FormsModule,CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
@@ -50,6 +50,12 @@ export class Header implements OnInit {
     } else {
       this.router.navigate(['/products']);
     }
+  }
+
+  goHome() {
+    this.selectedCategory = null;  // reset active category
+    this.searchQuery = '';         // also reset search if you want
+    this.router.navigate(['/']);   // navigate to home
   }
 
   goToCart() {

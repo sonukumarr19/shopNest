@@ -1,17 +1,4 @@
 <div class="min-h-screen bg-gray-50">
-  <!-- Header -->
-  <div class="bg-blue-600 text-white py-4">
-    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-      <div class="flex items-center space-x-4">
-        <h1 class="text-2xl font-bold">Flipkart</h1>
-        <span class="text-yellow-300 text-sm">Explore Plus</span>
-      </div>
-      <div class="flex items-center space-x-4">
-        <span>Hello {{ customer.firstName }}</span>
-        <button (click)="logout()" class="text-blue-200 hover:text-white">Logout</button>
-      </div>
-    </div>
-  </div>
 
   <div class="max-w-7xl mx-auto px-4 py-6">
     <div class="flex flex-col lg:flex-row gap-6">
@@ -101,10 +88,13 @@
                 <li>
                   <button 
                     (click)="setActiveSection('wishlist')"
-                    [class]="activeSection === 'wishlist' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700 hover:bg-gray-50'"
-                    class="w-full text-left px-3 py-2 rounded-md text-sm flex items-center space-x-3">
+                    [ngClass]="{'bg-blue-50 text-blue-600 font-medium': activeSection === 'wishlist'}"
+                    class="w-full text-left px-3 py-2 rounded-md text-sm flex items-center space-x-3 text-gray-700 hover:bg-gray-50">
+                    
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                      </path>
                     </svg>
                     <span>My Wishlist</span>
                   </button>
@@ -360,14 +350,7 @@
 
           <!-- Wishlist Placeholder -->
           <div *ngIf="activeSection === 'wishlist'" class="p-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-6">My Wishlist</h2>
-            <div class="text-center py-12">
-              <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-              </svg>
-              <p class="text-gray-500">Your wishlist is empty!</p>
-              <p class="text-gray-400 text-sm">Add items you like to your wishlist. Review them anytime and easily move them to the bag.</p>
-            </div>
+              <app-wishlist></app-wishlist>
           </div>
 
         </div>

@@ -3,16 +3,22 @@ export interface Product{
   name: string;
   shortDescription : string;           
   description : string;  
-  images : Array<string>; // Assuming image is an array of strings (URLs or paths)
+  images : Array<string>; 
   price: number;    
   discount : number;
   categoryId : string ;
   brandId : string ;
   isFeatured : boolean;
   isNewProduct : boolean;
-  available?: boolean; // optional but defaulted to true
-  inWishlist?: boolean; // Optional property to track wishlist status
+  available?: boolean; 
+  inWishlist?: boolean; 
   inStock: boolean;
+  sizes?: string[];          
+  selectedSize?: string;      
+  availability?: 'in-stock' | 'out-of-stock' | 'limited';
+  rating?: number;
+  reviews?: string[];
+  userId: string; // Assuming this is the user who added the product
 }
  
 

@@ -21,6 +21,18 @@
                class="w-full h-full object-contain transition-transform duration-300"
                (mousemove)="onImageHover($event)"
                (mouseleave)="onImageLeave()">
+
+            <!-- Wishlist icon button -->
+            <button 
+                class="absolute top-3 right-3 w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center shadow-xl transition"
+                (click)="addToWishList(product)" 
+            >
+              @if (isInWishList(product)) {
+                <i class="material-icons text-red-500 text-[20px] ">favorite</i>
+              }@else {
+                <i class="material-icons text-red-500 text-[20px] ">favorite_border</i>
+              }
+            </button>
           
           <!-- Zoom Overlay -->
           <div *ngIf="showZoom"
@@ -161,14 +173,16 @@
           [routerLink]="'product/' + product._id"/>
 
           <!-- Wishlist icon button -->
-          <button 
-              class="absolute top-3 right-3 w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center shadow-xl transition"
-              (click)="toggleWishlist(product)"
-          >
-              <i class="material-icons text-red-500 text-[20px] ">
-              {{ product.inWishlist ? 'favorite' : 'favorite_border' }}
-              </i>
-          </button>
+            <button 
+                class="absolute top-3 right-3 w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center shadow-xl transition"
+                (click)="addToWishList(product)" 
+            >
+                @if (isInWishList(product)) {
+                  <i class="material-icons text-red-500 text-[20px] ">favorite</i>
+                }@else {
+                  <i class="material-icons text-red-500 text-[20px] ">favorite_border</i>
+                }
+            </button>
 
           <div class="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg animate-pulse">
                 NEW

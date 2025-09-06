@@ -2,6 +2,7 @@ import { Injectable , inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../types/product';
 import { Category } from '../types/category';
+import { UserProfile } from '../types/user-profile';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -38,6 +39,10 @@ export class CustomerService {
 
   getProductById(id:string){
     return this.http.get<Product>(`https://shopnest-wgn8.onrender.com/customer/product/${id}`)
+  }
+
+  getUserProfile(userId: string): Observable<UserProfile> {
+    return this.http.get<UserProfile>(`https://shopnest-wgn8.onrender.com/customer/user/${userId}`);
   }
 
 }

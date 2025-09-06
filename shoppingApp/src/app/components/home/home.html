@@ -103,7 +103,6 @@
           <button 
               class="absolute top-3 right-3 w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center shadow-xl transition"
               (click)="addToWishList(product)" 
-
           >
             @if (isInWishList(product)) {
               <i class="material-icons text-red-500 text-[20px] ">favorite</i>
@@ -177,11 +176,13 @@
           <!-- Wishlist icon button -->
           <button 
               class="absolute top-3 right-3 w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center shadow-xl transition"
-              (click)="isInWishList(product)"
+              (click)="addToWishList(product)" 
           >
-              <i class="material-icons text-red-500 text-[20px]">
-              {{ product.inWishlist ? 'favorite' : 'favorite_border' }}
-              </i>
+            @if (isInWishList(product)) {
+              <i class="material-icons text-red-500 text-[20px] ">favorite</i>
+            }@else {
+              <i class="material-icons text-red-500 text-[20px] ">favorite_border</i>
+            }
           </button>
 
           <!-- Featured Badge -->

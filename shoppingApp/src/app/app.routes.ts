@@ -15,6 +15,7 @@ import { authGuard } from './core/auth-guard';
 import { AdminDashboard } from './components/manage/admin-dashboard/admin-dashboard';
 import { adminGuard } from './core/admin-guard';
 import { CustomerProfile } from './components/customer-profile/customer-profile';
+import { Wishlist } from './components/wishlist/wishlist';
 
 
 
@@ -95,5 +96,9 @@ export const routes: Routes = [
     {
         path : "login",
         component:Login  
+    },
+    {   
+        path: 'wishlist',
+        component: Wishlist
     },
 ];

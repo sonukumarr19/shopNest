@@ -1,44 +1,84 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { CustomerService } from '../../services/customer-service';
+import { UserProfile } from '../../types/user-profile';
+import { AuthService } from '../../services/auth-service';
+import { RouterLink } from '@angular/router';
+import { Wishlist } from '../wishlist/wishlist';
+
 
 @Component({
   selector: 'app-customer-profile',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule , Wishlist],
   templateUrl: './customer-profile.html',
   styleUrl: './customer-profile.css'
 })
 export class CustomerProfile {
   activeSection = 'profile';
   isEditing = false;
+  customerService = inject(CustomerService);  
+  authService = inject(AuthService);
   
   customer = {
-    firstName: 'Rahul',
-    lastName: 'Sharma',
-    email: 'rahul.sharma@gmail.com',
+    firstName: 'Sonu',
+    lastName: 'Kumar',
+    email: 'sonu1234@gmail.com',
     phone: '+91 9876543210',
     gender: 'male',
-    dateOfBirth: '1990-05-15',
+    dateOfBirth: '2003-12-19',
     alternatePhone: '+91 9876543211'
   };
+
+  ngOnInit() {
+    const userId = this.authService.getUserId();  // 👈 get from token
+    console.log('Logged-in user ID:', userId);
+    if (!userId) {
+      console.error('No logged-in user found');
+      return;
+    }
+
+    this.customerService.getUserProfile(userId).subscribe({
+      next: (data) => {
+        console.log('User profile API response:', data);
+
+        const [firstName, ...lastNameParts] = data.name?.split(' ') || ['Guest'];
+        const lastName = lastNameParts.join(' ');
+
+        this.customer = {
+          ...this.customer, // keep defaults for missing fields
+          firstName: firstName,
+          lastName: lastName || '',
+          email: data.email
+        };
+
+        console.log('Customer object after mapping:', this.customer);
+      },
+      error: (err) => {
+        console.error('Error loading user profile:', err);
+      }
+    });
+  }
+
 
   addresses = [
     {
       id: 1,
       type: 'Home',
-      name: 'Rahul Sharma',
-      address: 'Plot No. 123, Sector 45, Near Metro Station',
-      city: 'Gurugram',
-      state: 'Haryana',
-      pincode: '122001',
+      name: 'Sonu Kumar',
+      address: 'GDB Hostel , Sector-1 , NIT Rourkela',
+      city: 'Rourkela',
+      state: 'Odisha',
+      pincode: '769008',
       phone: '+91 9876543210',
       isDefault: true
     },
     {
       id: 2,
       type: 'Work',
-      name: 'Rahul Sharma',
+      name: 'Sonu Kumar',
       address: 'Tower A, 5th Floor, Cyber City',
       city: 'Gurugram',
       state: 'Haryana',
