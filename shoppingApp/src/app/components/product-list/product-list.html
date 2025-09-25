@@ -199,7 +199,7 @@
 
               <!-- Price -->
               <div class="flex items-center space-x-2 mb-4">
-                <span class="text-2xl font-bold text-gray-900">{{formatPrice(product.price)}}</span>
+                <span class="text-2xl font-bold text-gray-900">₹{{ (product.price - product.discount * product.price / 100) | number : '1.0-0' }}</span>
                 <span 
                   *ngIf="product.price > product.price * (1 - product.discount)" 
                   class="text-gray-500 line-through text-lg"
