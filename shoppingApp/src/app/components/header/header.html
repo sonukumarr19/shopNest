@@ -1,7 +1,7 @@
 <!-- Add this in your index.html once -->
 <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 
-<header class="w-full bg-blue-600 text-white shadow-md flex-col">
+<header class="w-full bg-cyan-900 text-white shadow-md flex-col">
   <div class="px-6 p-4 flex items-center justify-between">
             <!-- Logo -->
         <div class="text-2xl font-bold tracking-wide cursor-pointer"
@@ -75,8 +75,8 @@
     <div class="overflow-x-auto whitespace-nowrap py-2 flex justify-around ">
       <button
         *ngFor="let cat of categories"
-        class=" text-sm font-medium cursor-pointer border border-hidden hover:text-black transition-all"
-        [class.text-gray-900]="selectedCategory === cat"
+        class=" text-sm font-medium cursor-pointer border border-hidden hover:text- transition-all"
+        [class.text-cyan-400]="selectedCategory === cat"
         (click)="onCategoryChange(cat._id!)"
       >
         {{ cat.name }}

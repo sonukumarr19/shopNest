@@ -149,7 +149,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" *ngIf="filteredProducts.length > 0">
           <div 
             *ngFor="let product of filteredProducts; trackBy: trackByProductId" 
-            class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
+            class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col"
           >
             <!-- Product Image -->
             <div class="relative overflow-hidden">
@@ -160,67 +160,61 @@
                   class="w-full h-80 object-contain group-hover:scale-105 transition-transform duration-300"
                 >
               </a>
-              <div 
-                *ngIf="product.discount > 0" 
-                class="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 rounded text-sm font-medium"
-              >
+              <div *ngIf="product.discount > 0" class="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 rounded text-sm font-medium">
                 {{product.discount}}% OFF
               </div>
-              <div 
-                *ngIf="!product.inStock" 
-                class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-medium"
-              >
+              <div *ngIf="!product.inStock" class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-medium">
                 Out of Stock
               </div>
-              <!-- Category indicator for mixed category view -->
-              <div 
-                *ngIf="filters.categoryIds.length > 1" 
-                class="absolute bottom-2 left-2 bg-blue-500 bg-opacity-90 text-white px-2 py-1 rounded text-xs font-medium"
-              >
+              <div *ngIf="filters.categoryIds.length > 1" class="absolute bottom-2 left-2 bg-blue-500 bg-opacity-90 text-white px-2 py-1 rounded text-xs font-medium">
                 {{product.categoryName}}
               </div>
             </div>
 
             <!-- Product Details -->
-            <div class="p-4 relative">
+            <div class="p-4 flex flex-col flex-1">
               <h3 class="font-medium text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
                 {{product.name}}
               </h3>
               
-              <!-- Features -->
-              <div class="flex flex-wrap gap-1 mb-3">
+              <!-- Features / Description -->
+              <div class="flex flex-wrap gap-1 mb-4 overflow-hidden" style="max-height: 4.5rem;"> 
                 <span 
                   *ngFor="let feature of product.shortDescription.split(',')" 
-                  class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs"
+                  class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs truncate"
                 >
                   {{feature}}
                 </span>
               </div>
 
+              <!-- Spacer to push price & button to bottom uniformly -->
+              <div class="flex-1"></div>
+
               <!-- Price -->
-              <div class="flex items-center space-x-2 mb-4">
+              <div class="flex items-center space-x-5 mb-3">
                 <span class="text-2xl font-bold text-gray-900">₹{{ (product.price - product.discount * product.price / 100) | number : '1.0-0' }}</span>
-                <span 
-                  *ngIf="product.price > product.price * (1 - product.discount)" 
-                  class="text-gray-500 line-through text-lg"
-                >
+                <span *ngIf="product.price > product.price * (1 - product.discount)" class="text-gray-500 line-through text-lg">
                   {{formatPrice(product.price)}}
                 </span>
               </div>
 
               <!-- Add to Cart Button -->
-              <button 
-                [disabled]="!product.inStock"
-                class="w-full py-2 px-4 rounded-md font-medium transition-colors duration-200"
-                [class]="product.inStock 
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white' 
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'"
-              >
-                {{product.inStock ? 'Add to Cart' : 'Out of Stock'}}
-              </button>
+              <div>
+                <button 
+                  [disabled]="!product.inStock"
+                  class="w-full py-2 px-4 rounded-md font-medium transition-colors duration-200"
+                  [class]="product.inStock 
+                    ? 'bg-cyan-900 hover:bg-blue-700 text-white' 
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'"
+                >
+                  {{product.inStock ? 'Add to Cart' : 'Out of Stock'}}
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
+
 
         <!-- No Products Found -->
         <div 
