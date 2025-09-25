@@ -63,7 +63,7 @@ async function deleteProduct(req, res) {
 
 async function getNewProducts(req, res) {
     try {
-        const products = await Product.find({ isNewProduct: true }).sort({ createdAt: -1 }).limit(10);
+        const products = await Product.find({ isNewProduct: true }).sort({ createdAt: -1 }).limit(12);
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching new products', error });
@@ -72,7 +72,7 @@ async function getNewProducts(req, res) {
 
 async function getFeaturedProducts(req, res) {
     try {
-        const products = await Product.find({ isFeatured: true }).limit(10);
+        const products = await Product.find({ isFeatured: true }).limit(12);
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching featured products', error });
